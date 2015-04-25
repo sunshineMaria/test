@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<title>jquery定时器使用方法</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript">
+var start=new Date(2015,1,4,4,20,0)
+console.log("开始时间"+start);
+var end=new Date()
+console.log("结束时间"+end)
+var h=parseInt((end-start)/1000/60/60);
+var m=parseInt((end-start)/1000/60-h*60);
+var s=(end-start)/1000-h;
+console.log(h);
+console.log(m);
+console.log(s);
+function startTime()
+{
+var today=new Date(new Date()- new Date(2015,2,3,4,20,0))
+var h=today.getHours()
+var m=today.getMinutes()
+var s=today.getSeconds()
+// add a zero in front of numbers<10
+m=checkTime(m)
+s=checkTime(s)
+document.getElementById('txt').innerHTML=h+":"+m+":"+s
+t=setTimeout('startTime()',500)
+}
+
+function checkTime(i)
+{
+if (i<10) 
+  {i="0" + i}
+  return i
+}
+</script>
+</head>
+
+<body onload="startTime()">
+<div id="txt"></div>
+</body>
+</html>

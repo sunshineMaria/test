@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>播放音乐</title>
+  <script src="jquery-1.10.2.min.js"></script>
+  <style>
+    a {
+      width: 20px;
+      height: 20px;
+      background: pink;
+    }
+    #playbutton {
+      width: 100px;
+      height: 20px;
+      background: red;
+    }
+    #audio {
+      width: 0;
+      height: 0;
+    }
+  </style>
+</head>
+<body>
+  <p><b>注释：</b>浏览器可能需要安装插件以后，才能播放该文件。</p>
+  <a>播放音频</a>
+  <!-- <p><a href="Sunshine Girl.mp3">点击这里，播放音乐</a></p> -->
+  <div id='playbutton'>另一个音频</div>
+
+  <audio controls="controls" id="audio">
+
+    <source src="Sunshine Girl.mp3" type="audio/mpeg">
+    <embed height="100" width="100" src="/i/song.mp3" />
+  </audio>
+  
+  
+  <script>
+  var clicked = false ;
+  var au= $('#audio');
+ 
+  $('#playbutton').click(function() {
+    if(!clicked){
+      
+    clicked=true;
+  au.get(0).play(); //找到对应DOM的方法，而不是直接用jQuery对象
+    }
+    else {
+      clicked = false;
+      au.get(0).pause();
+    }
+  });
+
+    $("a").on('click',function(){
+      if(!clicked){
+        clicked = true;
+        $("body").append('<embed height="0" width="0" src="Sunshine Girl.mp3"></embed>');
+        
+      }else {
+        $("embed").remove();
+        clicked = false;
+      }
+      
+    })
+
+    $.ajax({
+      url: '/path/to/file',
+      type: 'default GET (Other values: POST)',
+      dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
+      data: {param1: 'value1'},
+    })
+    .done(function() {
+      console.log("success");
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+
+
+
+      <% goodList.forEach(function(good, index){ 
+        var imgList = good[index].goods.goods_multi_imgs;
+          imgList.forEach(function(img, index){ %>
+            <li>
+              <img src="<%= img.goods_img%>" alt=""/>
+            </li>
+         <%  }) %>
+            
+      <% }); %>
+    
+  </script>
+</body>
+</html>
+
+
+
+

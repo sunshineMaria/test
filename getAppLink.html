@@ -1,0 +1,218 @@
+<%# head.html%>
+<%
+var detail = this.detail;
+var uInfo  = detail.uinfo;
+var rInfo = detail.root_uinfo;
+var uCircleInfo = detail.circle_info;
+var picInfo = detail.multimedia_miscpic;
+var rootCircleInfo = detail.root_circle_info;
+var transNum = detail.count_repin;
+var trans = detail.show_type;
+var picInfo = detail.multimedia_miscpic;
+var audio = detail.audio;
+var goodList = picInfo[0].tags;
+
+var os = this.os,
+    r = this.r,
+    oldGetAppLink = _extFn.getAppLink,
+    getAppLink = function( protocol, params ) {
+        return oldGetAppLink( protocol, params, os, r );
+    }
+
+
+if (rootCircleInfo.length==0){
+    rootCircleInfo = uCircleInfo;
+}
+
+
+/* 音频单位是秒*/
+    function parseAudioDuration( duration ) {
+        var MINUTE = 60,
+            mins
+
+        if ( duration < MINUTE ) {
+            return duration + '\'\''
+        } else {
+            mins = parseInt( duration / MINUTE, 10 )
+            return mins + '\'' + ( duration - mins * MINUTE ) + '"'
+        }
+    }
+%>
+
+<div class="main">
+    <div class="picture">
+        <div class="imageSlide" id="imageSlide">
+            <ul>
+                <li style="background-image:url('<%= picInfo[0].picurl %>')">
+                    <% goodList.forEach(function(good, index){
+                    var type = good.type;
+                     var x = good.x*100,y = good.y*100;
+                     var direc = (x<50) ? 'left':'right' %>
+                    <div class="tag" style="top: <%= y %>%;left: <%= x %>%;">
+                        <% if(type == "goods") {%>
+                        <p class="name <%= direc %>"><%= good.goods.goods_title %></p>
+                        <p class="price <%= direc %>"><%= good.goods.goods_price %></p>
+                        <% }else { %>
+                        <p class="name <%= direc %>"><%= good.tlabel.tlabel_name %></p>
+                        <% } %>
+                        <span class="tag-ico <%= direc %>"></span>
+                    </div>
+                    <% }); %>
+                </li>
+
+                    <% goodList.forEach(function(good, index){
+                        var type = good.type;
+                        if(type =="goods") {%>
+                        <% var imgList = good.goods.goods_multi_imgs%>
+                            <% imgList.forEach(function(item, index){ %>
+                    <li style="background-image:url('<%= item.goods_img %>')"></li>
+                        <% });%>
+                    <% }
+                }); %>
+
+                <!--<li style="background-image:url('http://d03.res.meilishuo.net/pic/u/05/70/00f1cc1a1040235d8c8c5671ee5b_800_666.cg.jpg')"></li>-->
+                <!--<li style="background-image:url('http://d03.res.meilishuo.net/pic/u/1a/a7/7c3036268e2342d1d4b8b7893ce4_504_710.ch.jpg')"></li>-->
+                <!--<li style="background-image:url('http://d06.res.meilishuo.net/pic/u/5a/f5/91a741fabd6a8790359eb856fd4b_800_648.cg.jpg')"></li>-->
+            </ul>
+            <div class="num"></div>
+        </div>
+
+        <% if( audio && audio.url ) {%>
+        <a class="post-voice js-audio">
+            <audio src="<%= audio.url %>"></audio>
+            <span class="voice-icons">
+                <i class="icon-voice-1"></i>
+                <i class="icon-voice-2"></i>
+                <i class="icon-voice-3"></i>
+            </span>
+            <span class="post-voice-length"><%= parseAudioDuration(audio.duration) %></span>
+        </a>
+        <% } %>
+
+        <!--<div class="tag" style="top: 20%;left: 20%;">-->
+            <!--<p class="name left">snoopy图案的长款毛衣</p>-->
+
+            <!--<p class="price left">￥125.00</p>-->
+            <!--<span class="tag-ico left"></span>-->
+        <!--</div>-->
+        <!--<div class="tag" style="top:30%;left: 60%;">-->
+            <!--<p class="name right">snoopy图案的长款毛衣</p>-->
+
+            <!--<p class="price right">￥125.00</p>-->
+            <!--<span class="tag-ico right"></span>-->
+        <!--</div>-->
+
+
+        <div class="code">
+            <img src="http://d05.res.meilishuo.net/pic/_o/e3/d4/d6b315ac38a6046057ff285fde90_46_42.cf.png" alt=""/>
+        </div>
+
+    </div>
+    <div class="desc">
+        <div class="admin">
+            <a href="<%= getAppLink( 'person', { user_id: uInfo.user_id} ) %>">
+            <img src="<%= uInfo.avatar_a %>" alt="用户头像"/>
+
+            <div class="info">
+                <p class="admin-name">
+                    <%= uInfo.nickname %>
+                </p>
+                <p class="admin-desc gray">
+                    <%= uInfo.label%>
+                </p>
+            </div>
+            </a>
+            <div class="time">
+                <span class="time-ico"></span>
+                <span class="date"><%=detail.publish_time%></span>
+            </div>
+        </div>
+        <% if (detail.msg_text){ %>
+        <p class="title"><%= detail.msg_text%></p>
+        <% } %>
+    </div>
+
+    <div class="sku-list">
+        <div class="from-info">
+            <% if(trans != 0){%>
+            商品转自
+            <span class="pink"><%= rInfo.nickname %></span>
+            的发布
+            <% }else{ %>
+            <span class="pink"><%= uInfo.nickname %></span>
+            的发布
+            <% } %>
+            <a class="chat" href="<%= getAppLink('im_chat',{toid:uInfo.user_id}) %>"> <!-- 参数缺少utype-->
+                <span class="chat-ico"></span>
+                <span>私聊</span>
+            </a>
+        </div>
+        <ul>
+            <% goodList.forEach(function(good, index){
+            var type = good.type;
+            if(type =="goods"){
+            %>
+            <li class="item">
+                <div class="info-wrap">
+                    <img src="<%= good.goods.goods_img %>" alt="商品图片"/>
+                    <div class="item-info">
+                        <p class="title"><%= good.goods.goods_title %></p>
+                        <p class="price"><%= good.goods.goods_price %></p>
+                    </div>
+                </div>
+                <div class="buy-wrap">
+                    <img class="ico-car" src="http://d03.res.meilishuo.net/pic/_o/56/e9/46ebd9c633a3a04ceb6d6e5dc33d_52_52.cf.png" alt="" />
+                    <span class="buy-btn">购买</span>
+                </div>
+            </li>
+            <% } %>
+            <% }); %>
+
+        </ul>
+    </div>
+
+    <% if (transNum != 0){ %>
+    <a class="trans" href="<%= getAppLink( 'repin_circle_list',{ msg_id : detail.msg_id }) %>">
+        <span class="tans-ico"></span>
+
+        <p><span>该商品还被转进了</span><span class="num"><%= transNum %>个圈子</span></p>
+        <span class="go-ico"></span>
+    </a>
+    <% } %>
+    <div class="circle-info">
+
+        <a class="circle" href="<%= getAppLink( 'circle', { circle_id : uCircleInfo.id } ) %>">
+            <p class="title">进圈和圈主同好们一起聊聊吧</p>
+            <p class="circle-name"><%= uCircleInfo.name%></p>
+            <p class="chat gray">圈主: <%= uInfo.nickname %></p>
+
+            <div class="member">
+                <img src="<%= uInfo.avatar_a %>" alt=""/>
+                <div class="num" data-num="<%= uCircleInfo.member_num%>"></div>
+            </div>
+            <div class="in-btn">
+                进入聊
+            </div>
+        </a>
+    </div>
+
+
+</div>
+
+
+<script type="text/html" id="member-show">
+    <? this.members.forEach(function(member, index){ ?>
+        <img src="<?= member.avatar_a?>" alt=""/>
+    <? }); ?>
+</script>
+
+<script>
+fml.vars.circleId = <%= uCircleInfo.id %>
+</script>
+
+<%! $_ENGINE_SELF.callFn("useModule")("<<<_use:
+	fml.use('wap/page/mainapp/detail');
+_use:", this._JSstack, this._JSmods); %>
+
+
+<%# foot_simple.html%>

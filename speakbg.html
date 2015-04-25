@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>说话框,标签有左右摆动效果</title>
+</head>
+<style>
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  display: inline-block;
+}
+
+.icon-tag {
+    width            : 34px;
+    height           : 41px;
+    background-image : url("http://d02.res.meilishuo.net/pic/_o/85/c5/d4b1de53b6c1439b646f1f692f70_27_33.cf.png");
+    background-repeat: no-repeat;
+    transform-origin: 19px 7px;
+    -webkit-animation: rotate 1s linear 0s infinite alternate;
+    -o-animation: rotate 1s linear 0s infinite alternate;
+    animation: rotate 1s linear 0s infinite alternate;
+}
+
+@keyframes rotate {
+  0% {transform: rotate(10deg); }
+  100% {transform: rotate(-80deg); }
+}
+
+@-webkit-keyframes rotate {
+  0% {transform: rotate(10deg); }
+  100% {transform: rotate(-80deg); }
+}
+
+.tag-text {
+    position         : relative;
+    display: inline-block;
+    height           : 40px;
+    line-height      : 40px;
+    padding          : 0 10px;
+    color: #fff;
+    font-size        : 22px;
+    background-color : rgba(51, 51, 51, .8);
+    white-space      : nowrap;
+    border-radius    : 3px;
+}
+
+.tag-left {
+  border-top-left-radius: 0px;
+      margin-left: 10px;
+}
+
+.tag-right {
+  border-top-right-radius: 0px;
+  margin-right: 10px;
+}
+    
+    .tag-left:before {
+      content  : "";
+      position : absolute;
+      top      : 0;
+      border   : 8px solid rgba(51, 51, 51, .8);
+      left: -16px;
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+      border-top-left-radius: 7px;
+    }
+  
+  .tag-right:before {
+      content  : "";
+      position : absolute;
+      top      : 0;
+      border   : 8px solid rgba(51, 51, 51, .8);
+      right: -16px;
+      border-bottom-color: transparent;
+      border-right-color: transparent;
+      border-top-right-radius: 7px;
+  }
+
+  /*.dir-left .tag-text {
+    float                  : right;
+    margin-left            : 16px;
+    border-top-left-radius : 0;
+  }
+  	.dir-left:before {
+      left                      : -16px;
+      border-bottom-color       : transparent;
+      border-right-color        : transparent;
+      border-bottom-left-radius : 4px;
+      .transform(rotate(90deg));
+    }
+    .tag-left:before {
+      left                      : -16px;
+      border-bottom-color       : transparent;
+      border-right-color        : transparent;
+      border-bottom-left-radius : 4px;
+      .transform(rotate(90deg));
+    }
+
+  .dir-right .tag-text {
+    float                   : left;
+    margin-right            : 16px;
+    border-top-right-radius : 0;
+
+    
+  }
+
+  .dir-right:before {
+      right                   : -15.5px;
+      border-bottom-color     : transparent;
+      border-right-color      : transparent;
+      border-top-right-radius : 4px;
+    }
+    .tag-right:before {
+      right                   : -15.5px;
+      border-bottom-color     : transparent;
+      border-right-color      : transparent;
+      border-top-right-radius : 4px;
+    }*/
+    
+  ul {
+    list-style: none;
+  }
+  
+
+  .triangle {
+    width: 0px;
+    height: 0px;
+    border: 20px solid #000;
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+    border-top-left-radius: 3px;
+  }
+
+</style>
+<body>
+  <ul>
+		<li class="price-tag dir-left" style="left:62.22%;top: 37.7%;">
+          <i class="icon-tag" style="float:left"></i>
+            <p class="tag-text tag-left">0.01【测试商品】</p>
+    </li>
+    <li class="price-tag dir-right" style="left:62.22%;top: 37.7%;">
+          <i class="icon-tag" style="float:right"></i>
+            <p class="tag-text tag-right">0.01【测试商品】</p>
+    </li>
+    <div class="triangle">  
+    </div>
+  </ul>
+</body>
+</html>

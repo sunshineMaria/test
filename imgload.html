@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>翻到那个位置后才显示图片</title>
+	<script src="jquery-1.10.2.min.js"></script>
+</head>
+<style>
+
+	* {
+		padding: 0;
+		margin: 0;
+	}
+	.wall {
+		width: 100%;
+	}
+	img {
+		display: inline-block;
+		width: 50%;
+		opacity: 0;
+		transition: all .8s linear 0s;
+	}
+	.show {
+		opacity: 1;
+	}
+
+</style>
+<body>
+	<div class="wall">
+	</div>
+	<div class="pull-up"></div>
+	<script>
+	var imageList = ['images/dog1.jpg','images/dog2.jpg','images/dog3.jpg','images/dog4.jpg','images/dog5.jpg','images/dog6.jpg','images/dog7.jpg','images/dog8.jpg','images/dog9.jpg','images/dog10.jpg'];
+
+	var num = imageList.length;
+	var $win = $( window );
+	var winH = $win.height();
+	var $doc = $( document );
+	var imgList = [];
+	var flag = true;
+	var compared = false;
+	var TIMEGAP = 100;
+	var PULLGAP = 1000;
+	var timmer;
+
+	//一进页面就先去加载十个图片
+	getImage();
+	//监听滚动事件
+	$win.on( 'scroll', function() {
+		if ( !compared ){
+			clearTimeout( timmer );
+			compared = true;
+			timmer = setTimeout( function() {
+				compared = false;
+				imgLoad();
+				showPic();
+			}, TIMEGAP );
+
+		}
+	})
+
+	function getImage () {
+		imageList.forEach(function( image ){
+			var img = $( '<img src='+image+'>' );
+			$( '.wall' ).append(img);
+			imgList.push(img);
+		})
+		if ( flag ) {
+			$('img').addClass('show');
+		}
+		flag = true;
+	}
+
+	function imgLoad() {
+		var offSet = $( '.pull-up' ).offset().top; 
+		var scrTop = $doc.scrollTop();
+		var gap =  offSet - scrTop - winH;
+		//去加载数据
+		if ( gap < 100 ) {
+			if ( flag ) {
+				flag = false;
+				setTimeout( getImage,1000 );
+			}
+		}
+	}
+
+	function showPic() {
+		for ( var i= imgList.length-1 ; i >= 0; i-- ){
+			var $this = imgList[i];
+			var fold = winH + $win.scrollTop()+100;
+   			if( fold > $this.offset().top){
+   			 $this.addClass( 'show' );
+   			 imgList.splice( i,1 );
+	   		}
+		}
+	}
+	</script>
+</body>
+</html>

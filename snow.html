@@ -1,0 +1,76 @@
+<!DOCTYPE HTML> 
+<html> 
+<head> 
+<meta charset="UTF-8" /> 
+<title>snowing snow</title> 
+<style> 
+body{ 
+background: #000; 
+} 
+
+@-webkit-keyframes mysnow{ 
+0%{ 
+bottom:100%; 
+opacity:1; 
+} 
+50%{ 
+opacity:0.7; 
+/*-webkit-transform: rotate(10deg); */
+} 
+100%{ 
+/*-webkit-transform: rotate(0deg); */
+opacity: 0; 
+bottom: 0;
+} 
+} 
+
+.roll{ 
+position:absolute; 
+opacity:1; 
+animation: mysnow 8s ; 
+-webkit-animation: mysnow 8s ; 
+-moz-animation: mysnow 5s ; 
+-ms-animation: mysnow 5s ; 
+-o-animation: mysnow 5s ; 
+height:80px; 
+} 
+.div{ 
+position:fixed; 
+} 
+.imgone {
+	width: 24px;
+	height: 26px;
+}
+</style> 
+</head> 
+<body> 
+<div id="snowzone" > 
+</div> 
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+</body> 
+<script> 
+(function(){ 
+function snow(left,height,src){ 
+var div = document.createElement("div"); 
+var img = document.createElement("img"); 
+div.appendChild(img); 
+img.className = "roll imgone"; 
+img.src = src; 
+div.style.left=left+"px"; 
+div.style.height=height+"px"; 
+div.className="div"; 
+document.getElementById("snowzone").appendChild(div); 
+setTimeout(function(){ 
+document.getElementById("snowzone").removeChild(div); 
+// console.log(window.innerHeight); 
+},5000); 
+} 
+setInterval(function(){ 
+var left = Math.random()*window.innerWidth; 
+var height = Math.random()*100+500; 
+var src = "s"+Math.floor(Math.random()*2+1)+".png";//两张图片分别为"s1.png"、"s2.png" 
+snow(left,height,src); 
+},200); 
+})(); 
+</script> 
+</html>

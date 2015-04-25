@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/fontcss.CSS">
+	<link rel="stylesheet" href="css/basic.css">
+	<script src="jquery-1.10.2.min.js"></script>
+</head>
+<body>
+	<ul class="layout">
+		<li><i class="icon icon-book"></i></li>
+		<li><i class="icon icon-music"></i></li>
+		<li><i class="icon icon-film"></i></li>
+	</ul>
+	<script>
+		$("li:last-child").on("mouseenter",function(){
+			$(this).children().toggleClass('icon-film');
+			$(this).children().toggleClass('icon-music');
+		});
+	</script>
+</body>
+</html>

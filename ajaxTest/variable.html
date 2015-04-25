@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>局部变量和全局变量</title>
+</head>
+<script src="jquery-1.10.2.min.js"></script>
+<body>
+	<script>
+	var globalId = 0;
+	var urls = ['hello1.json','hello2.json','hello1.json']
+
+	function getData(url) {
+		var ajaxId = ++globalId;
+		console.log('已经发了'+globalId+'次请求')
+		$.ajax({
+			url: url,
+			type: 'get',
+			dataType: 'json',
+		})
+		.done(function(data) {
+			console.log("这是第"+ajaxId+"次请求返回");
+			if(ajaxId!=globalId)return
+			
+				console.log("请求的文件是"+url);
+			if(ajaxId == globalId){
+				setTimeout(function(){
+					console.log("第"+ajaxId+"数据是"+JSON.stringify(data));
+				},1000)
+			}
+			
+		})
+		.fail(function(data) {
+			console.log("error");
+		})
+	}
+
+
+	getData(urls[0]);
+	getData(urls[2]);
+
+	setTimeout('getData(urls[1])',1000)
+	
+	
+
+</script>
+	
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>测试不同ajax请求返回内容区分和先后 有回调函数练习</title>
+</head>
+<script src="jquery-1.10.2.min.js"></script>
+<body>
+	<div>
+		dsdfajk;
+	</div>
+	<script>
+	var globalId = 0;
+	var ajaxNum = 0;
+	function ajaxPost( url , callback ) {
+		var ajaxId = ++globalId;
+		var data = { 'data' : ajaxId };
+
+		//假请求，后面的随机数为了模仿ajax请求返回的时间。
+		var $post = setTimeout ( function(){
+
+			callback( ajaxId,data );
+
+		}, 2000*Math.random()+1000);
+
+		//真请求
+		// $.ajax({
+		// 	url: url,
+		// 	type: 'get',
+		// 	dataType: 'json',
+		// 	data: {},
+		// 	success: function() {
+		// 			callback( ajaxId, data );
+		// 	}
+		// })
+		
+	}
+
+	function allPost() {
+			ajaxPost ( 'hello1.json' , doSomething );
+			ajaxPost ( 'hello2.json' , doSomething );
+			ajaxPost ( 'hello2.json' , doSomething );	
+	}
+
+	function doSomething( ajaxId, data ) {
+		ajaxNum ++;
+		console.log( ajaxId );
+		console.log( data );
+		$('div').append( data.data );
+		if ( ajaxNum == 3){
+			alert( "完成了所有请求" );
+		}
+	}
+
+	allPost();
+
+	</script>
+</body>
+</html>

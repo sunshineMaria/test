@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+  div { color:blue; }
+  span { color:red; }
+  b { font-weight:bolder; }
+  .li1 { color:blue;}
+  .li2 { background: yellow}
+</style>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+  <img title = "hat1">
+  <img title = "hat2">
+  <div>Zero-th <span></span></div>
+  <div>First <span></span></div>
+  <div>Second <span></span></div>
+
+ 	<input type="checkbox" checked="checked">
+ 	<input type="checkbox" >
+ 	<input type="checkbox" >
+ 	<input type="checkbox" checked="checked">
+
+ 	<ol>
+ 		<li class="li1 li2">li元素</li>
+ 		<li class="li1 li2">li元素</li>
+ 		<li class="li2">li元素</li>
+ 		<li class="li1 li2">li元素</li>
+ 	</ol>
+<script>
+$("div").attr("id", function (arr) {
+  return "div-id" + arr;
+})
+.each(function () {
+  $("span", this).html("(ID = '<b>" + this.id + "</b>')");
+});
+$("img").attr("alt", function () {
+	return this.title;
+});
+$("input[type='checkbox']").attr("checked",false);
+$("input[type='checkbox']").prop("checked",true);
+
+$("li:last").removeClass(function(){
+	return $(this).prev().attr("class");
+});
+</script>
+ 
+</body>
+</html>

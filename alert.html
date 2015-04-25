@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>各种alert效果</title>
+	<script src="jquery-1.10.2.min.js"></script>
+	<style>
+		html {
+			height: 100%;
+		}
+		body {
+			 display: -webkit-box;  /* 老版本语法: Safari,  iOS, Android browser, older WebKit browsers.  */
+			  display: -moz-box;    /* 老版本语法: Firefox (buggy) */ 
+			  display: -ms-flexbox;  /* 混合版本语法: IE 10 */
+			  display: -webkit-flex;  /* 新版本语法： Chrome 21+ */
+			  display: flex;       /* 新版本语法： Opera 12.1, Firefox 22+ */
+
+			  /*垂直居中*/	
+			  /*老版本语法*/
+			  -webkit-box-align: center; 
+			  -moz-box-align: center;
+			  /*混合版本语法*/
+			  -ms-flex-align: center; 
+			  /*新版本语法*/
+			  -webkit-align-items: center;
+			  align-items: center;
+
+			  /*水平居中*/
+			  /*老版本语法*/
+			  -webkit-box-pack: center; 
+			  -moz-box-pack: center; 
+			  /*混合版本语法*/
+			  -ms-flex-pack: center; 
+			  /*新版本语法*/
+			  -webkit-justify-content: center;
+			  justify-content: center;
+				height: 100%;
+			} 
+
+
+		.btn {
+			width: 200px;
+			color: #fff;
+			background: #ff7a9a;
+			padding: 10px 0;
+			text-align: center;
+			border-radius: 5px;
+		}
+
+		.alert {
+			position: fixed;
+			top: -80px;
+			left: 50%;
+			margin-left: -100px;
+			width: 200px;
+			color: #000;
+			background: #fff;
+			padding: 20px 0;
+			text-align: center;
+			border: 1px solid #ccc;
+			border-bottom-right-radius: 5px;
+			border-bottom-left-radius: 5px;
+			box-shadow: 2px 2px 5px #ccc;
+			font-weight: bold;
+		}
+		
+
+	</style>
+</head>
+<body>
+	<div class="btn">点击试试</div>
+	<div class="alert">点击成功！</div>
+
+
+
+	<script>
+		$('.btn').click( function(){
+			$( '.alert' ).animate({
+				top: 0,
+			},800,function () {
+				setTimeout(function(){
+				$( '.alert' ).animate ({
+						top: '-80px'
+					},300);
+				},1000)
+				
+			});
+		} )
+	</script>
+</body>
+</html>

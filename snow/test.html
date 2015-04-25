@@ -1,0 +1,71 @@
+<!DOCTYPE HTML> 
+<html> 
+<head> 
+<meta charset="UTF-8" /> 
+<title>snowing snow</title> 
+<style> 
+body{ 
+background: #000; 
+height:100%;
+} 
+
+@-webkit-keyframes mysnow{ 
+0%{ 
+bottom:100%; 
+opacity:1; 
+} 
+100%{ 
+-webkit-transform: rotate(10deg); 
+opacity: 0.3; 
+bottom: 0;
+} 
+} 
+
+.roll{ 
+position:absolute; 
+animation: mysnow 8s ; 
+-webkit-animation: mysnow 8s ; 
+} 
+.container{ 
+position:fixed; 
+} 
+.imgone {
+	width: 24px;
+	height: 26px;
+
+}
+</style> 
+</head> 
+<body> 
+ <div id="snowzone" > 
+</div> 
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+</body> 
+<script> 
+(function(){ 
+function snow(left,height,size){
+		var $div = $("<div>");
+        $div.addClass('container').css({
+            left: left,
+            height: height,
+        }).appendTo('#snowzone');
+
+        var $snow = $("<div>");
+        $snow.addClass('roll').css({
+            "color": "#fff",
+            "font-size": size,
+        }).html("❄").appendTo($div);
+
+		setTimeout(function(){ 
+			$div.remove(); 
+			},5000); 
+}
+
+setInterval(function(){ 
+	var left = Math.random()*window.innerWidth; 
+	var height = Math.random()*200+560; 
+	var size = Math.random()*6 + 20;
+	snow(left,height,size); 
+	},250); 
+})();
+</script>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.color {
+			background: yellow;
+		}
+		.red {
+			font-size: 20px;
+		}
+		.wrap > div {
+			float: left;
+			width: 100px;
+			margin: 1em 1em 0 0;
+			padding-left: 3px;
+			border: 1px solid #abc;
+		}
+		div.a {
+			background-color: aqua;
+		}
+		div.b {
+			background-color: burlywood;
+		}
+		div.c {
+			background-color: cornsilk;
+		}
+	</style>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+	The <abbr title="People's Republic of China" style="background:blue">PRC</abbr> was founded in 1949.
+	<div class="bar">
+		<div class="foo">
+		我会变色	
+		</div>
+	</div>
+	
+	<div class="buttons">
+		<button>toggle</button>
+		<button class="a">toggle a</button>
+		<button class="a b">toggle a b</button>
+		<button class="a b c">toggle a b c</button>
+		<a href="">reset</a>
+	</div>
+	<div class="wrap">
+		<div></div>
+		<div class="b"></div>
+		<div class="a b"></div>
+		<div class="a c"></div>
+	</div>
+
+ 	<div>
+ 		<h2>从单一列表框和复选列表中取值，并显示选中的值。</h2>
+ 		<p></p>
+ 		<select id="single">
+ 			<option>Single</option>
+ 			<option>Single2</option>
+ 		</select>
+
+ 		<select multiple="multiple" id="multiple">
+ 			<option selected="selected">Multiple</option>
+ 			<option selected="selected">Multiple2</option>
+ 			<option selected="selected">Multiple3</option>
+ 		</select>
+
+ 	</div>
+
+	<div>
+		<h2>取得文本框的值</h2>
+		<input type="text" value="some text"/>
+		<input type="text" value = "other text">
+		<p class="input"></p>
+	</div>
+
+	<div></div>
+
+	<script>
+	$('div.foo').toggleClass(function(){
+		if (!$(this).parent().is('.bar')) {
+			return 'color';
+		}else {
+			return 'red';
+		}
+	});
+	var count = 0;
+	$('div.foo').click(function(){
+		count++;
+		$(this).toggleClass("color",count%3 == 0)
+	});
+
+	var cls = ['','a','a b','a b c'];
+	var divs = $('div.wrap').children();
+	var appendClass = function(){
+		divs.append(function(){
+			return '<div>' + (this.className || 'none' + "</div>");
+		});
+	};
+
+	appendClass();
+
+	$('button').bind('click',function() {
+		var tc = this.className || undefined;
+		divs.toggleClass(tc);
+		appendClass();
+	});
+
+	$('a').bind('click',function(event){
+		evnet.preventDefault();
+		divs.empty().each(function(i){
+			this.className = cls[i];
+		});
+		appendClass();
+	});
+
+	function display(){
+		var singleValues = $('#single').val();
+		var multipleValues = $('#multiple').val();
+		$("p").html("<b>Multiple:</b>" + multipleValues.join(',') + 
+			'<b>Single:</b>' + singleValues);
+	}
+	$("select").change(display);
+	display();
+
+	$('input').keyup(function(event) {
+		/* Act on the event */
+		var value = $(this).val();
+		$('.input').text(value);
+	}).keyup();
+
+	$('input').bind('blur', function() {
+    $(this).val(function(i,val) {
+      return val.toUpperCase();
+    });
+  });
+	</script>
+</body>
+</html>

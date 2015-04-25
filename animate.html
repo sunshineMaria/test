@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>animate</title>
+	<script src="jquery-1.10.2.min.js"></script>
+	<style>
+		.box {
+			width: 50px;
+			height: 50px;
+			border-radius: 50px;
+			background: red;
+			position: relative;
+			transition: all .2s ease-in-out;
+		}
+		button {
+			margin: 20px 10px;
+		}
+		.becircle {
+		 -webkit-transform: scale(2);
+		 border-radius: 50px;
+		}
+		
+		.test{
+			width:0; height:0; border-width:20px 10px; border-style:solid; border-color:#ff3300 #ffffff #ffffff #ffffff;
+		}
+
+
+	</style>
+</head>
+<body>
+	<div id="box" class="box" data-num="0"></div>
+	<div class="box" data-num="1"></div>
+	<div id="box" class="box" data-num="2"></div>
+	<div id="box" class="box" data-num="3"></div>
+	<div>
+		<button class="left">向左移</button>
+		<button class="right">向右移</button>
+		<button class="change">变形</button>
+		<button class="larger">变大一倍</button>
+		<button class="old">还原</button>
+	</div> 
+	<div class="test">
+		
+	</div>
+
+	<script type="text/javascript">
+	var num = 0;
+	function larger(){
+		setTimeout(function(){
+				$(".box[data-num='"+num+"']").addClass('becircle');
+				num++;
+				if(num<4){
+					larger();
+				}
+		},100)
+	}
+		var $box = $("#box");
+		$(".right").on("click",function(){
+			$box.animate({
+				left: "+=50px"
+			},1000)
+		})
+		$(".left").on("click",function(){
+			$box.animate({
+				left: "-=50px"
+			},1000)
+		})
+		$(".change").on("click",function(){
+			$box.toggleClass('becircle');
+			 $(this).html() == "变形" ? $(this).html("还原") : $(this).html("变形");
+		});
+		$(".larger").on("click",function(){
+			larger();
+			
+		});
+		$('.old').on('click', function(event) {
+			$box.removeClass('becircle');
+		});
+
+
+		$(document).ready(function(){
+         $(".click-btn").click(function(){
+             $(this).siblings().addClass("round");
+          });
+			 $(this).html() == "变形" ? $(this).html("还原") : $(this).html("变形");
+       });
+	</script>
+</body>
+</html>

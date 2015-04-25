@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件冒泡和绑定</title>
+	<script src="jquery-1.10.2.min.js"></script>
+		
+</head>
+<body>
+
+	<div id="hello" style="background:red;width:200px;height:200px">
+		<ul>
+			<li class="blue">蓝色</li>
+			<li class="red">红色</li>
+		</ul>
+	</div>
+	
+	<script>
+		$("div").on("click",function(){
+			alert("hello");
+		})
+		$(".red").on("click",function(){
+			alert("red");
+			event.stopPropagation();
+		})
+	</script>
+</body>
+</html>

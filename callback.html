@@ -1,0 +1,16 @@
+
+	function a( callback ) {
+		setTimeout(function(){
+		callback(123);
+	 },8000);
+		return 222;
+	}
+
+	var c = a( setD );
+	var e;
+	console.log(c);
+	console.log(e);
+
+	function setD ( param ) {
+		e = param;
+	}
